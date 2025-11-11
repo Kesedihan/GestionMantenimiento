@@ -45,6 +45,7 @@ public class Usuario {
 
     /** Estado del usuario (Activo o inactivo) */
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
     /** Descripcion del cargo del usuario */
@@ -58,6 +59,7 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_rol")
     )
+    @Builder.Default
     private Set<Rol> roles = new HashSet<>();
 
 }

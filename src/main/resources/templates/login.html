@@ -1,36 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" th:href="@{/css/login.css}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-  <title>Iniciar sesion</title>
+  <title>Iniciar Sesión - Sistema de Gestión de Mantenimiento</title>
 </head>
+
 <body>
-    <div class="form-container">
-        <form>
-            <h2 class="text-center mb-4" style="color: rgb(229, 229, 229);">INICIAR SESION</h2>
-            <div class="mb-3">
-              <label for="username" class="form-label" style="color: rgb(229, 229, 229);">Usuario</label>
-              <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario">
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label" style="color: rgb(229, 229, 229);">Contraseña</label>
-              <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
-            </div>
-            <div class="d-grid button-container">
-              <button type="submit" class="btn boton">Iniciar Sesión</button>
-            </div>
-             <div class="d-grid button-container">
-                <a class="btn btn-back"style="color: rgb(115, 115, 115);" href="../index.html">Volver al inicio</a>
-            </div>
-          </form>
-    </div>
+  <div class="form-container">
+    <form th:action="@{/login}" method="post">
+      <h2 class="text-center mb-4" style="color: rgb(229, 229, 229);">INICIAR SESIÓN</h2>
+      
+      <!-- Mostrar mensaje de error si existe -->
+      <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+      <!-- Campo de Correo -->
+      <div class="mb-3">
+        <label for="correo" class="form-label" style="color: rgb(229, 229, 229);">Correo Electrónico</label>
+        <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>
+      </div>
+
+      <!-- Campo de Contraseña -->
+      <div class="mb-3">
+        <label for="contrasena" class="form-label" style="color: rgb(229, 229, 229);">Contraseña</label>
+        <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+      </div>
+
+      <!-- Botón de Iniciar Sesión -->
+      <div class="d-grid button-container">
+        <button type="submit" class="btn boton">Iniciar Sesión</button>
+      </div>
+
+      <!-- Botón para Volver al Inicio -->
+      <div class="d-grid button-container">
+        <a class="btn btn-back" style="color: rgb(115, 115, 115);" th:href="@{/}">Volver al inicio</a>
+      </div>
+    </form>
+  </div>
 </body>
+
 </html>
