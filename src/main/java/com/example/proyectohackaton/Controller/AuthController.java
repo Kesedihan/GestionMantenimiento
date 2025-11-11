@@ -62,13 +62,15 @@ public class AuthController {
     /**
      * Formulario de abrir ticket
      */
-    @GetMapping("abrirTicket")
-    public String abrirTicketForm(Model model) {
+    @GetMapping("/abrirTicket")
+    public String abrirTicket(Model model) {
         Usuario usuarioActual = obtenerUsuarioLogueado();
         model.addAttribute("usuario", usuarioActual);
         model.addAttribute("solicitud", new SolicitudMantenimiento());
         return "abrirTicket";
     }
+
+
 
     /**
      * Procesar creación de ticket
