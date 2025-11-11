@@ -3,6 +3,7 @@ package com.example.proyectohackaton.Repository;
 import com.example.proyectohackaton.Entity.EstadoSolicitud;
 import com.example.proyectohackaton.Entity.SolicitudMantenimiento;
 import com.example.proyectohackaton.Entity.TipoFalla;
+import com.example.proyectohackaton.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,10 @@ import java.util.List;
 @Repository
 public interface SolicitudMantenimientoRepository extends JpaRepository<SolicitudMantenimiento, Long> {
 
+    /**
+     * Busca solicitudes por usuario solicitante
+     */
+    List<SolicitudMantenimiento> findByUsuario(Usuario usuario);
 
     /**
      * Busca solicitudes por su estado (PENDIENTE, EN_PROCESO, CERRADA).

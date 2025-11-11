@@ -61,9 +61,9 @@
             <h5 class="card-title">
               <i class="bi bi-shield-lock"></i> Roles
             </h5>
-            <div th:if="${roles != null and roles.size() > 0}">
+              <div th:if="${roles != null and roles.size() > 0}">
               <span th:each="rol : ${roles}" class="badge bg-primary me-2">
-                <i class="bi bi-check-circle"></i> <span th:text="${rol.nombreRol}"></span>
+                <i class="bi bi-check-circle"></i> <span th:text="${rol.nombre}"></span>
               </span>
             </div>
             <div th:if="${roles == null or roles.size() == 0}">

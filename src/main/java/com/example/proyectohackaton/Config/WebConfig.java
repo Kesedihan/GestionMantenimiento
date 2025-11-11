@@ -8,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     /**
-     * Configura los view controllers para las rutas sin controlador específico
+     * Configura los view controllers para las rutas
+     * Nota: Las vistas de solicitante y abrirTicket serán manejadas por AuthController
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
