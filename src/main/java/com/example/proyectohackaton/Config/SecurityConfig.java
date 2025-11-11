@@ -57,7 +57,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")       // Procesamiento del formulario
                         .usernameParameter("correo")        // Nombre del campo del correo
                         .passwordParameter("contrasena")    // Nombre del campo contraseña
-                        .defaultSuccessUrl("/dashboard", true) // Redirección si el login es correcto
+                        .defaultSuccessUrl("/solicitante", true) // Redirección si el login es correcto
                         .failureUrl("/login?error=true")    // En caso de error en autenticación
                         .permitAll()
                 )

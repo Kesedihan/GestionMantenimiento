@@ -1,0 +1,135 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background: #1a1a2e;
+}
+
+.navbar{
+    background-color: #0f0f1e;
+    border-bottom: 2px solid #4169e1;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(65, 105, 225, 0.1);
+}
+
+.navbar p{
+    margin: 0;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+    margin: auto;
+}
+
+.form-container{
+    width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: transparent;
+    border: 2px solid #4169e1;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(65, 105, 225, 0.1);
+}
+
+.ticket-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-row{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: start;
+    padding: 15px;
+    background-color: rgba(65, 105, 225, 0.05);
+    border-left: 3px solid #4169e1;
+    border-radius: 4px;
+}
+
+.info-row.full-width{
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.info-label{
+    color: #6495ed;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.info-value{
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.info-text-area{
+    background-color: #0f0f1e;
+    border: 1px solid #4169e1;
+    padding: 12px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.status-badge{
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+    width: fit-content;
+}
+
+.status-progress{
+    background-color: rgba(100, 149, 237, 0.3);
+    color: #6495ed;
+    border: 1px solid #6495ed;
+}
+
+.status-completed{
+    background-color: rgba(76, 175, 80, 0.3);
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.status-pending{
+    background-color: rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.button-container{
+    text-align: center;
+    padding-top: 30px;
+}
+
+.boton{
+    background-color:transparent !important;
+    color: white !important;
+    border: 2px solid #4169e1 !important;
+}   
+
+.boton:hover{
+    background-color: #6495ed !important;
+    transform: scale(0.99);
+
+}
+
+.btn-back{
+    background-color: transparent !important;
+    color: rgb(115, 115, 115) !important;
+    border: 2px solid #4169e1 !important;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover{
+    color: #6495ed !important;
+    border-color: #6495ed !important;
+}
