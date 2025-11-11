@@ -24,13 +24,20 @@
                     <li class="nav-item">
                         <span class="nav-link user-info">
                             <i class="bi bi-person-circle"></i>
-                            <span th:text="${usuario.nombre}"></span>
+                            <span th:text="${#authentication.principal.username}"></span>
                         </span>
                     </li>
                     <li class="nav-item">
                         <a th:href="@{/solicitante}" class="nav-link">
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="nav-link btn btn-link" style="border: none; cursor: pointer;">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -67,6 +74,9 @@
                         <option value="ESTRUCTURAL">Estructural</option>
                         <option value="OTRA">Otra</option>
                     </select>
+                    <div th:if="${#fields.hasErrors('tipoFalla')}" class="text-danger mt-2">
+                        <span th:errors="*{tipoFalla}"></span>
+                    </div>
                 </div>
 
                 <!-- Descripción -->
@@ -76,6 +86,9 @@
                     </label>
                     <textarea class="form-control form-control-lg" id="descripcionFalla" th:field="*{descripcionFalla}" 
                               rows="5" placeholder="Describe detalladamente el problema..." required></textarea>
+                    <div th:if="${#fields.hasErrors('descripcionFalla')}" class="text-danger mt-2">
+                        <span th:errors="*{descripcionFalla}"></span>
+                    </div>
                 </div>
             </div>
 
@@ -90,14 +103,20 @@
                         <label for="equipo" class="form-label">
                             <i class="bi bi-cpu"></i> Equipo
                         </label>
-                        <input type="text" class="form-control" id="equipo" placeholder="Ej: Aire acondicionado A1" required>
+                        <input type="text" class="form-control" id="equipo" th:field="*{equipo}" placeholder="Ej: Aire acondicionado A1" required>
+                        <div th:if="${#fields.hasErrors('equipo')}" class="text-danger mt-2">
+                            <span th:errors="*{equipo}"></span>
+                        </div>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="ubicacion" class="form-label">
                             <i class="bi bi-building"></i> Ubicación
                         </label>
-                        <input type="text" class="form-control" id="ubicacion" placeholder="Ej: Bloque A, Piso 2, Aula 201" required>
+                        <input type="text" class="form-control" id="ubicacion" th:field="*{ubicacion}" placeholder="Ej: Bloque A, Piso 2, Aula 201" required>
+                        <div th:if="${#fields.hasErrors('ubicacion')}" class="text-danger mt-2">
+                            <span th:errors="*{ubicacion}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,23 +129,26 @@
 
                 <div class="urgency-options">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_baja" value="baja">
+                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_baja" value="BAJA" th:field="*{urgencia}">
                         <label class="form-check-label urgency-label" for="urgencia_baja">
                             <span class="urgency-badge baja">Baja</span>
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_media" value="media" checked>
+                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_media" value="MEDIA" th:field="*{urgencia}">
                         <label class="form-check-label urgency-label" for="urgencia_media">
                             <span class="urgency-badge media">Media</span>
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_alta" value="alta">
+                        <input class="form-check-input" type="radio" name="urgencia" id="urgencia_alta" value="ALTA" th:field="*{urgencia}">
                         <label class="form-check-label urgency-label" for="urgencia_alta">
                             <span class="urgency-badge alta">Alta</span>
                         </label>
                     </div>
+                </div>
+                <div th:if="${#fields.hasErrors('urgencia')}" class="text-danger mt-2">
+                    <span th:errors="*{urgencia}"></span>
                 </div>
             </div>
 
@@ -144,7 +166,7 @@
 
     <!-- Footer -->
     <footer class="footer-section">
-        <p>&copy; 2024 Sistema de Gestión de Mantenimiento. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Sistema de Gestión de Mantenimiento. Todos los derechos reservados.</p>
     </footer>
 
     <!-- Bootstrap JS -->
