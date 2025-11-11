@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../css/abrirTicket.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <title>Abrir Ticket</title>
+</head>
+<body>
+    <header>
+        <navbar class="navbar">
+            <div class="navbar-text-container">
+                <p>Panel Solicitante | Abrir Ticket</p>
+            </div>
+        </navbar>
+    </header>
+     <div class="form-container">
+        <form>
+            <h2 class="text-center mb-4" style="color: rgb(229, 229, 229);">ABRIR TICKET</h2>
+            
+            <div class="mb-3">
+              <label for="categoria" class="form-label" style="color: rgb(229, 229, 229);">Categoría: </label>
+              <input type="text" class="form-control" id="categoria" placeholder="Ej: Aire acondicionado no funciona">
+            </div>
+
+            <div class="mb-3">
+              <label for="sede" class="form-label" style="color: rgb(229, 229, 229);">Sede: </label>
+              <select class="form-select" id="sede">
+                <option selected>Seleccionar sede...</option>
+                <option value="1">Sede Principal</option>
+                <option value="2">Sede Norte</option>
+                <option value="3">Sede Sur</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="bloque" class="form-label" style="color: rgb(229, 229, 229);">Bloque: </label>
+              <select class="form-select" id="bloque">
+                <option selected>Seleccionar bloque...</option>
+                <option value="A">Bloque A</option>
+                <option value="B">Bloque B</option>
+                <option value="C">Bloque C</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="piso" class="form-label" style="color: rgb(229, 229, 229);">Piso: </label>
+              <select class="form-select" id="piso">
+                <option selected>Seleccionar piso...</option>
+                <option value="1">Piso 1</option>
+                <option value="2">Piso 2</option>
+                <option value="3">Piso 3</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="aula" class="form-label" style="color: rgb(229, 229, 229);">Aula: </label>
+              <input type="text" class="form-control" id="aula" placeholder="Ej: 101">
+            </div>
+
+            <div class="mb-3">
+              <label for="dependencia" class="form-label" style="color: rgb(229, 229, 229);">Dependencia: </label>
+              <select class="form-select" id="dependencia">
+                <option selected>Seleccionar dependencia...</option>
+                <option value="1">Recursos Humanos</option>
+                <option value="2">Informática</option>
+                <option value="3">Administración</option>
+                <option value="4">Mantenimiento</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="descripcion" class="form-label" style="color: rgb(229, 229, 229);">Descripción</label>
+              <textarea class="form-control" id="descripcion" rows="5" placeholder="Describe detalladamente el problema..."></textarea>
+            </div>
+
+            <div class="d-grid button-container">
+              <button type="submit" class="btn boton">Enviar</button>
+            </div>
+             <div class="d-grid button-container">
+                <a class="btn btn-back"style="color: rgb(115, 115, 115);" href="../index.html">Volver al panel</a>
+            </div>
+          </form>
+</body>
+</html>
