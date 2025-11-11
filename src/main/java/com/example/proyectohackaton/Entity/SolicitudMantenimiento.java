@@ -37,4 +37,7 @@ public class SolicitudMantenimiento {
 
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estadoSolicitud;
+
+    // Nuevo campo prioridad (String para compatibilidad rápida con valores CRITICA/ALTA/MEDIA/BAJA)
+    private String prioridad;
 }

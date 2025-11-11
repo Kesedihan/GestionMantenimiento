@@ -2,6 +2,7 @@ package com.example.proyectohackaton.Service;
 
 import com.example.proyectohackaton.Entity.SolicitudMantenimiento;
 import com.example.proyectohackaton.Entity.Usuario;
+import com.example.proyectohackaton.Entity.EstadoSolicitud;
 import com.example.proyectohackaton.Repository.SolicitudMantenimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,12 @@ public class SolicitudMantenimientoService {
         if (solicitud.getFechaSolicitud() == null) {
             solicitud.setFechaSolicitud(LocalDate.now());
         }
-        
+
         // Si no se asignó estado, colocar PENDIENTE por defecto
         if (solicitud.getEstadoSolicitud() == null) {
-            // Se asume que existe el enum PENDIENTE en EstadoSolicitud
-            // solicitud.setEstadoSolicitud(EstadoSolicitud.PENDIENTE);
+            solicitud.setEstadoSolicitud(EstadoSolicitud.PENDIENTE);
         }
-        
+
         return solicitudRepository.save(solicitud);
     }
 
@@ -74,5 +74,26 @@ public class SolicitudMantenimientoService {
      */
     public long contarSolicitudesPorUsuario(Usuario usuario) {
         return solicitudRepository.findByUsuario(usuario).size();
+    }
+
+    /**
+     * Obtener solicitudes pendientes (estado = PENDIENTE)
+     */
+    public List<SolicitudMantenimiento> obtenerSolicitudesPendientes() {
+        return solicitudRepository.findByEstadoSolicitud(EstadoSolicitud.PENDIENTE);
+    }
+
+    /**
+     * Actualizar prioridad de una solicitud por id
+     */
+    public void actualizarPrioridad(Long solicitudId, String prioridad) {
+        Optional<SolicitudMantenimiento> opt = solicitudRepository.findById(solicitudId);
+        if (opt.isPresent()) {
+            SolicitudMantenimiento sol = opt.get();
+            sol.setPrioridad(prioridad);
+            solicitudRepository.save(sol);
+        } else {
+            // opcional: log
+        }
     }
 }

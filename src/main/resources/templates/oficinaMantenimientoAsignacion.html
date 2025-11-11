@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" th:href="@{/css/oficinaMantenimiento.css}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <title>Asignación de Prioridades</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <span class="navbar-brand"><i class="bi bi-list-check"></i> Oficina de Mantenimiento</span>
+        <div class="navbar-nav ms-auto">
+          <span class="nav-link user-info"><i class="bi bi-person-circle"></i> <span th:text="${#authentication.principal.username}"></span></span>
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="nav-link btn btn-link" style="border:none;cursor:pointer;"><i class="bi bi-box-arrow-right"></i> Logout</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="text-container">
+      <p class="title">Asignación de Prioridades</p>
+      <p class="subtitle">Asigne prioridad a solicitudes pendientes</p>
+    </div>
+  </header>
+
+  <main class="card-container">
+    <div class="card table-card">
+      <div th:if="${#lists.isEmpty(solicitudes)}" class="alert alert-info">No hay solicitudes pendientes.</div>
+
+      <div class="table-responsive" th:if="${!#lists.isEmpty(solicitudes)}">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Solicitante</th>
+              <th>Dependencia</th>
+              <th>Ubicación</th>
+              <th>Categoría</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Prioridad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="sol, stat : ${solicitudes}">
+              <th scope="row" th:text="${stat.count}">1</th>
+              <td th:text="${#dates.format(sol.fechaCreacion, 'dd/MM/yyyy')}">11/11/2025</td>
+              <td th:text="${#dates.format(sol.fechaCreacion, 'HH:mm')}">10:30</td>
+              <td th:text="${sol.usuario != null ? sol.usuario.nombre : sol.solicitante}">Nombre</td>
+              <td th:text="${sol.dependencia}">Mantenimiento</td>
+              <td th:text="${sol.ubicacion}">Bloque A - Piso 2</td>
+              <td th:text="${sol.tipoFalla}">Aire Acondicionado</td>
+              <td th:text="${#strings.abbreviate(sol.descripcionFalla, 60)}">Descripción...</td>
+              <td><span th:text="${sol.estado}">PENDIENTE</span></td>
+
+              <!-- formulario para asignar prioridad por fila -->
+              <td>
+                <form th:action="@{/admin/asignar-prioridad}" method="post" class="d-flex align-items-center">
+                  <input type="hidden" name="solicitudId" th:value="${sol.id}" />
+                  <select name="prioridad" class="form-select priority-select" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="CRITICA" th:selected="${sol.prioridad == 'CRITICA'}">Crítica</option>
+                    <option value="ALTA" th:selected="${sol.prioridad == 'ALTA'}">Alta</option>
+                    <option value="MEDIA" th:selected="${sol.prioridad == 'MEDIA'}">Media</option>
+                    <option value="BAJA" th:selected="${sol.prioridad == 'BAJA'}">Baja</option>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-primary ms-2">Guardar</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

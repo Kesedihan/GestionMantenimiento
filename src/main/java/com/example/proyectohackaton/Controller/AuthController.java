@@ -29,6 +29,10 @@ public class AuthController {
         return "index";
     }
 
+        @GetMapping("/oficinaMantenimiento")
+    public String mostrarOficinaMantenimiento() {
+        return "oficinaMantenimiento";
+    }
     /**
      * Página de login pública
      */
@@ -106,5 +110,27 @@ public class AuthController {
     private Usuario obtenerUsuarioLogueado() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return usuarioService.obtenerUsuarioPorCorreo(auth.getName()).orElse(null);
+    }
+
+    /**
+     * Vista para asignación de prioridades (admin)
+     */
+    @GetMapping("admin/asignar")
+    public String mostrarAsignacionPrioridades(Model model) {
+        model.addAttribute("usuario", obtenerUsuarioLogueado());
+        // debe devolver lista de solicitudes pendientes (service)
+        model.addAttribute("solicitudes", solicitudMantenimientoService.obtenerSolicitudesPendientes());
+        return "oficinaMantenimientoAsignacion";
+    }
+
+    /**
+     * Procesa la asignación de prioridad a una solicitud
+     */
+    @PostMapping("admin/asignar-prioridad")
+    public String asignarPrioridad(@RequestParam("solicitudId") Long solicitudId,
+                                   @RequestParam("prioridad") String prioridad) {
+        // implementar en el service: actualizar prioridad y persistir
+        solicitudMantenimientoService.actualizarPrioridad(solicitudId, prioridad);
+        return "redirect:/admin/asignar?exito=true";
     }
 }
