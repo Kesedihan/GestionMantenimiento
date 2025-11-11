@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,77 +7,111 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="/src/main/resources/static/css/asignar.css" />
+  <link rel="stylesheet" th:href="@{/css/asignar.css}" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-  <title>Inicio</title>
+  <title>Asignación de Tareas</title>
 </head>
 
 <body>
   <header>
-
-    <navbar class="navbar">
-        <div class="navbar-text-container">
-          <p>INICIO</p>
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <span class="navbar-brand">
+          <i class="bi bi-list-check"></i> ADMINISTRADOR
+        </span>
+        <div class="navbar-nav ms-auto">
+          <span class="nav-link user-info">
+            <i class="bi bi-person-circle"></i>
+            <span th:text="${#authentication.principal.username}"></span>
+          </span>
+          <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="nav-link btn btn-link" style="border: none; cursor: pointer;">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+          </form>
         </div>
-    </navbar>
+      </div>
+    </nav>
+
     <div class="text-container">
-      <p class="title">ASIGNACIÓN DE TAREA</p>
+      <p class="title">ASIGNACIÓN DE TAREAS</p>
+      <p class="subtitle">Asigna tareas a operarios disponibles</p>
     </div>
   </header>
 
-
-<div class="card-container">
-
-    <div class="card" style="width: 80rem;">
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">No.</th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Hora</th>
-      <th scope="col">Solicitante</th>
-      <th scope="col">Dependencia</th>
-      <th scope="col">Ubicación</th>
-      <th scope="col">Categoría</th>
-      <th scope="col">Prioridad</th>
-      <th scope="col">Descripción</th>
-      <th scope="col">Operario</th>
-      <th scope="col"></th>
+  <div class="card-container">
+    <div class="card" style="width: 100%; max-width: 1400px;">
       
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-        <td>
+      <!-- Mensaje si no hay tareas -->
+      <div th:if="${#lists.isEmpty(tareas)}" class="alert alert-info mt-3" role="alert">
+        <i class="bi bi-info-circle"></i> No hay tareas pendientes de asignación.
+      </div>
 
-            <select class="form-select form-select-sm" aria-label="Small select example">
-            <option selected>Seleccionar</option>
-            <option value="1">Opcion</option>
-            </select>
-        </td>
-        <td>
-            <div class="d-grid button-container">
-            <a class="btn btn-back" style="color: rgb(47, 1, 255);" >Asignar</a>
-            </div>
-        </td>
-        
-    </tr>
-    
-  </tbody>
-</table>
+      <!-- Tabla de tareas -->
+      <div th:if="${!#lists.isEmpty(tareas)}">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Solicitante</th>
+                <th scope="col">Dependencia</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Prioridad</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Operario Asignado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tarea, iterStat : ${tareas}">
+                <th scope="row" th:text="${iterStat.count}"></th>
+                <td th:text="${#dates.format(tarea.fechaCreacion, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#dates.format(tarea.fechaCreacion, 'HH:mm')}"></td>
+                <td th:text="${tarea.solicitante}"></td>
+                <td th:text="${tarea.dependencia}"></td>
+                <td th:text="${tarea.ubicacion}"></td>
+                <td th:text="${tarea.tipoFalla}"></td>
+                <td>
+                  <span th:classappend="'badge badge-' + ${tarea.urgencia.toLowerCase()}"
+                        th:text="${tarea.urgencia}"
+                        style="font-size: 12px;">
+                  </span>
+                </td>
+                <td>
+                  <span th:text="${#strings.abbreviate(tarea.descripcionFalla, 40)}"></span>
+                </td>
+                <td>
+                  <form th:action="@{/admin/asignar-tarea}" method="post" style="display: inline;">
+                    <input type="hidden" name="tareaId" th:value="${tarea.id}">
+                    <select name="operarioId" class="form-select form-select-sm" required>
+                      <option value="">Seleccionar operario...</option>
+                      <option th:each="operario : ${operarios}" 
+                              th:value="${operario.id}" 
+                              th:text="${operario.nombre}"
+                              th:selected="${tarea.operarioId == operario.id}">
+                      </option>
+                    </select>
+                </td>
+                <td>
+                  <button type="submit" class="btn btn-sm btn-primary" 
+                          th:disabled="${tarea.estado != 'PENDIENTE'}">
+                    <i class="bi bi-check-lg"></i> Asignar
+                  </button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
-
   </div>
 
 </body>
